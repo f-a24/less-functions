@@ -1,6 +1,8 @@
 import { hex2rgb, rgb2hex } from './convert';
 
-export default (c1, c2, weight) => {
+export type MixType = (c1: string, c2: string, weight: number) => string;
+
+const mix: MixType = (c1, c2, weight) => {
   const c1Arr = hex2rgb(c1);
   const c2Arr = hex2rgb(c2);
   const p = weight / 100;
@@ -15,3 +17,5 @@ export default (c1, c2, weight) => {
     c1Arr[2] * w1 + c2Arr[2] * w2
   ]);
 };
+
+export default mix;

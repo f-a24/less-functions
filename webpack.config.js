@@ -1,56 +1,32 @@
 module.exports = {
-  mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
-  entry: ['babel-polyfill', `${__dirname}/src/index.js`],
+  mode: 'production',
+  entry: `${__dirname}/src/index.ts`,
   output: {
     path: `${__dirname}/public`,
-    filename: 'index.js'
+    filename: 'index.js',
+    library: 'less',
+    libraryExport: 'default'
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: [['env', {'modules': false}]]
-            }
-          }
-        ],
+        test: /\.ts$/,
+        use: 'ts-loader',
         exclude: /node_modules/
-      },
-      {
-        test: /\.(css|scss)$/,
-        use: [
-          'style-loader', 
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: [
-                require('autoprefixer')({grid: true})
-              ]
-            },
-          },
-          'sass-loader'
-        ]
-      },
-      {
-        test: /\.(gif|png|jpg|woff|woff2|eot|ttf|svg)$/,
-        loader: 'url-loader?limit=100000'
       }
     ]
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.ts', '.js']
   },
   plugins: [],
   performance: {
     hints: false
   },
-  serve: {
-    content: 'public/',
+  devServer: {
+    contentBase: `${__dirname}/public/`,
     open: true,
+    hot: true,
     port: 3000
   }
 };

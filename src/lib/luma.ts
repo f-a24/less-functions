@@ -1,6 +1,7 @@
 import { hex2rgb } from './convert';
 
-export default c => {
+export type LumaType = (hex: string) => number;
+const luma: LumaType = c => {
   const rgb = hex2rgb(c);
   let r = rgb[0] / 255;
   let g = rgb[1] / 255;
@@ -12,3 +13,4 @@ export default c => {
 
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 };
+export default luma;
